@@ -312,27 +312,25 @@
                     将大模型技术落地为实际可用的产品。以下是我的代表作，融合了 Agent 工作流编排与自然语言交互。
                 </p>
             </div>
-<!-- ======================================================= -->
-<!-- 超大号 AutoFlight 嵌入窗口 (直接替换原卡片) -->
-<!-- ======================================================= -->
-<div class="reveal w-full max-w-6xl mx-auto bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden relative">
-    
-    <!-- 顶部栏 -->
-    <div class="bg-slate-900 text-white px-6 py-4 flex items-center justify-between">
-        <div class="flex items-center gap-3">
-            <div class="w-3 h-3 bg-red-500 rounded-full"></div>
-            <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
-            <div class="w-3 h-3 bg-green-500 rounded-full"></div>
-            <span class="ml-4 font-bold tracking-wide">AutoFlight Intelligent Agent</span>
-        </div>
-        <div class="text-xs text-slate-400">Powered by Baidu AppBuilder</div>
-    </div>
 
-    <!-- 核心挂载区域：强制高度 800px -->
-    <div id="big-chat-container" style="height: 800px; width: 100%; position: relative;"></div>
+            <!-- AutoFlight Card -->
+            <div class="reveal max-w-5xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-200 hover:shadow-2xl transition-all duration-500">
+                <div class="grid md:grid-cols-2">
+                    <!-- 左侧：封面图/预览 -->
+                    <div class="relative bg-gradient-to-br from-blue-600 to-indigo-700 p-10 flex items-center justify-center overflow-hidden group cursor-pointer" onclick="openProjectModal()">
+                        <div class="absolute w-96 h-96 border-[40px] border-white/10 rounded-full -top-20 -left-20 animate-spin-slow" style="animation-duration: 20s;"></div>
+                        <div class="relative z-10 text-center">
+                            <div class="w-20 h-20 bg-white rounded-2xl flex items-center justify-center text-blue-600 text-3xl shadow-lg mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                                <i class="fa-solid fa-plane-departure"></i>
+                            </div>
+                            <h3 class="text-3xl font-bold text-white mb-2">AutoFlight</h3>
+                            <p class="text-blue-100">智能航班助手 Agent</p>
+                            <div class="mt-8 inline-block px-6 py-2 bg-white/20 backdrop-blur-md rounded-full text-white text-sm font-semibold border border-white/30 group-hover:bg-white group-hover:text-blue-600 transition-colors">
+                                点击查看架构设计 & 搭建心得 <i class="fa-solid fa-code-branch ml-2"></i>
+                            </div>
+                        </div>
+                    </div>
 
-</div>
-           
                     <!-- 右侧：简介 -->
                     <div class="p-10 flex flex-col justify-center">
                         <div class="flex gap-2 mb-4">
@@ -701,113 +699,35 @@
         }
     </script>
     
-    <!-- 🟢 百度 AppBuilder 官方 SDK (极简模式) -->
-    <!-- 删除了所有自定义 CSS 容器，直接调用官方脚本 -->
-    <!-- 页面右下角会自动出现蓝色悬浮球，绝对能用 -->
-    <script src="https://agi-dev-platform-web.cdn.bcebos.com/ai_apaas/embed/output/embedFullSDK.js?responseExpires=0&t=1764212310484"></script>
-    <script>
-    new EmbedWebSDK({
-        appId: '905124da-6d28-4f00-8467-74c7fbb90c01',
-        code: 'embedEAgXsxc6FSMd8aIAH9LG'
-    });
-    </script>
-
-<!-- ======================================================= -->
-    <!-- 新增：AutoFlight 在线体验区 (固定大窗口) -->
-    <!-- ======================================================= -->
-    <section class="py-16 bg-slate-100 border-t border-slate-200">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-10">
-                <h2 class="text-3xl font-bold text-slate-900">在线试用 AutoFlight</h2>
-                <p class="text-slate-500 mt-2">无需跳转，在此直接对话</p>
-            </div>
-
-            <!-- 这里是重点：给它一个固定高度的大容器 -->
-            <!-- h-[800px] 保证高度足够，max-w-5xl 保证宽度合适 -->
-            <div class="w-full max-w-5xl mx-auto h-[800px] bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200 relative">
-                <!-- 挂载点 -->
-                <div id="static-mount-point" class="w-full h-full"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 底部 -->
-    <footer class="bg-slate-950 text-slate-500 py-12 border-t border-slate-800">
-        <div class="container mx-auto px-6 text-center">
-            <p class="mb-2 text-slate-400">© 2025 杨嘉逸 Yang Jiayi. All rights reserved.</p>
-            <p class="text-xs">Designed with <span class="text-red-500">♥</span> and Code.</p>
-        </div>
-    </footer>
-
-    <!-- JavaScript 逻辑 (保留之前的动效) -->
-    <script>
-        // ... (如果你之前的动效脚本还在，可以保留，或者直接用下面的) ...
-        function reveal() {
-            var reveals = document.querySelectorAll(".reveal");
-            for (var i = 0; i < reveals.length; i++) {
-                var windowHeight = window.innerHeight;
-                var elementTop = reveals[i].getBoundingClientRect().top;
-                var elementVisible = 100;
-                if (elementTop < windowHeight - elementVisible) {
-                    reveals[i].classList.add("active");
-                }
-            }
-        }
-        window.addEventListener("scroll", reveal);
-        reveal();
-        
-        function moveBlobs(event) {
-            const blobs = document.querySelectorAll('.interactive-blob');
-            const x = event.clientX;
-            const y = event.clientY;
-            blobs.forEach(blob => {
-                const speed = blob.getAttribute('data-speed');
-                blob.style.transform = `translate(${(window.innerWidth - x * speed) / 100}px, ${(window.innerHeight - y * speed) / 100}px)`;
-            });
-        }
-    </script>
-
-    <!-- 🟢 百度 SDK 核心配置 -->
-    <script src="https://agi-dev-platform-web.cdn.bcebos.com/ai_apaas/embed/output/embedFullSDK.js?responseExpires=0&t=1764212310484"></script>
+ <script src="https://agi-dev-platform-web.cdn.bcebos.com/ai_apaas/embed/output/embedFullSDK.js?responseExpires=0&t=1764212310484"></script>
     
-    <!-- 关键样式补丁：强制填满刚才设置的 800px 高度 -->
+    <!-- 强制样式补丁：确保 100% 填满上面的 800px 盒子 -->
     <style>
-        #static-mount-point iframe {
+        #baidu-embed-container iframe {
             width: 100% !important;
             height: 100% !important;
+            min-height: 800px !important;
             border: none !important;
             display: block !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
         }
     </style>
 
-<!-- 百度 SDK 终极嵌入版 -->
-<script src="https://agi-dev-platform-web.cdn.bcebos.com/ai_apaas/embed/output/embedFullSDK.js?responseExpires=0&t=1764212310484"></script>
+    <script>
+        new EmbedWebSDK({
+            appId: '905124da-6d28-4f00-8467-74c7fbb90c01',
+            code: 'embedEAgXsxc6FSMd8aIAH9LG',
+            // 这里的 ID 必须和上面的 div ID 一致
+            mountNode: document.getElementById('baidu-embed-container'),
+            renderConfig: {
+                width: '100%',
+                height: '100%'
+            }
+        });
+    </script>
 
-<style>
-    /* 核心补丁：强制撑满 800px 高度 */
-    #big-chat-container iframe {
-        width: 100% !important;
-        height: 100% !important;
-        min-height: 800px !important;
-        border: none !important;
-        display: block !important;
-        position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
-    }
-</style>
 
-<script>
-    new EmbedWebSDK({
-        appId: '905124da-6d28-4f00-8467-74c7fbb90c01',
-        code: 'embedEAgXsxc6FSMd8aIAH9LG',
-        mountNode: document.getElementById('big-chat-container'),
-        renderConfig: {
-            width: '100%',
-            height: '100%'
-        }
-    });
-</script>
 </body>
 </html>
-
