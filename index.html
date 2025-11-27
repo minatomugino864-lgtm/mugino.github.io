@@ -741,28 +741,27 @@
     <!-- 3. 初始化脚本 (精简版) -->
     <script>
         let isChatInitialized = false;
-
-        function toggleBaiduChat() {
-            const container = document.getElementById('baidu-chat-container');
+function toggleBaiduChat() {
+        const container = document.getElementById('baidu-chat-container');
+        
+        if (container.classList.contains('hidden')) {
+            // 1. 先显示窗口
+            container.classList.remove('hidden');
+            container.classList.add('flex'); 
             
-            if (container.classList.contains('hidden')) {
-                // 显示窗口
-                container.classList.remove('hidden');
-                container.classList.add('flex'); 
-                
-                // 首次打开初始化
-                if (!isChatInitialized) {
+            // 2. 关键修改：延迟 200毫秒再加载 SDK，确保窗口已经完全渲染出来
+            if (!isChatInitialized) {
+                setTimeout(() => {
                     initBaiduSDK();
                     isChatInitialized = true;
-                }
-            } else {
-                // 隐藏窗口
-                container.classList.add('hidden');
-                container.classList.remove('flex');
+                }, 200); // 延迟 200ms
             }
+        } else {
+            // 隐藏窗口
+            container.classList.add('hidden');
+            container.classList.remove('flex');
         }
-
-        function initBaiduSDK() {
+    }        function initBaiduSDK() {
             new EmbedWebSDK({
                 appId: '905124da-6d28-4f00-8467-74c7fbb90c01',
                 code: 'embedEAgXsxc6FSMd8aIAH9LG',
