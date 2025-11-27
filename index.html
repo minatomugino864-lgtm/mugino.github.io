@@ -699,19 +699,77 @@
         }
     </script>
     
-    <!-- 百度 AppBuilder SDK 集成位置 -->
-    <script src="https://agi-dev-platform-web.cdn.bcebos.com/ai_apaas/embed/output/embedFullSDK.js?responseExpires=0&t=1764212310484"></script>
+  <!-- 1. 悬浮开关按钮 -->
+    <button onclick="toggleBaiduChat()" class="fixed bottom-6 right-6 z-[60] bg-blue-600 hover:bg-blue-700 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 group">
+        <!-- 图标 -->
+        <i class="fa-solid fa-robot text-xl group-hover:rotate-12 transition-transform"></i>
+    </button>
+
+    <!-- 2. 聊天窗口容器 (默认隐藏, 固定宽高) -->
+    <div id="baidu-chat-container" class="fixed bottom-24 right-6 z-[60] w-[380px] h-[600px] bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden hidden flex-col origin-bottom-right transition-all duration-300">
+        <!-- 顶部标题栏 -->
+        <div class="bg-slate-900 text-white px-4 py-3 flex justify-between items-center shrink-0">
+            <div class="flex items-center gap-2">
+                <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                <span class="font-bold text-sm">AutoFlight 智能助手</span>
+            </div>
+            <button onclick="toggleBaiduChat()" class="text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <!-- SDK 挂载点 -->
+        <div class="flex-1 bg-slate-50 relative w-full h-full">
+             <!-- 引入百度 SDK -->
+             <script src="https://agi-dev-platform-web.cdn.bcebos.com/ai_apaas/embed/output/embedFullSDK.js?responseExpires=0&t=1764212310484"></script>
+             <div id="baidu-mount-point" class="w-full h-full"></div>
+        </div>
+    </div>
+
+    <!-- 3. 初始化脚本 -->
     <script>
-        // 初始化 SDK
-        new EmbedWebSDK({
-            appId: '905124da-6d28-4f00-8467-74c7fbb90c01', 
-            code: 'embedEAgXsxc6FSMd8aIAH9LG', 
-            // 渲染配置
-            renderConfig: {
-                width: '100%', 
-                height: '100%'
+        // 标记是否已经初始化
+        let isChatInitialized = false;
+
+        function toggleBaiduChat() {
+            const container = document.getElementById('baidu-chat-container');
+            
+            if (container.classList.contains('hidden')) {
+                // 打开窗口
+                container.classList.remove('hidden');
+                container.classList.add('flex'); // 使用 flex 布局
+                
+                // 首次打开时初始化 SDK，避免页面加载卡顿
+                if (!isChatInitialized) {
+                    initBaiduSDK();
+                    isChatInitialized = true;
+                }
+            } else {
+                // 关闭窗口
+                container.classList.add('hidden');
+                container.classList.remove('flex');
             }
-        });
+        }
+
+        function initBaiduSDK() {
+            // 注意：这里 id 必须对应上面的 div id
+            new EmbedWebSDK({
+                appId: '905124da-6d28-4f00-8467-74c7fbb90c01',
+                code: 'embedEAgXsxc6FSMd8aIAH9LG',
+                // 挂载到指定容器
+                mountNode: document.getElementById('baidu-mount-point'),
+                renderConfig: {
+                    // 这里设置为 100% 是相对于父容器(h-600px)的
+                    width: '100%',
+                    height: '100%',
+                    // 强制显示模式
+                    display: 'embed' 
+                }
+            });
+        }
     </script>
+    <!-- END: 百度 AppBuilder 悬浮窗修复版 -->
+    <!-- ======================================================= -->
+
 </body>
 </html>
