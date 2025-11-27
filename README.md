@@ -1,0 +1,1 @@
+# mugino.github.io
