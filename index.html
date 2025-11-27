@@ -699,80 +699,15 @@
         }
     </script>
     
-  <!-- 1. 悬浮开关按钮 -->
-    <button onclick="toggleBaiduChat()" class="fixed bottom-6 right-6 z-[60] bg-blue-600 hover:bg-blue-700 text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 group">
-        <!-- 图标 -->
-        <i class="fa-solid fa-robot text-xl group-hover:rotate-12 transition-transform"></i>
-    </button>
-
-  <!-- 2. 聊天窗口容器 (修复白屏版) -->
-    <div id="baidu-chat-container" class="fixed bottom-24 right-6 z-[60] w-[380px] h-[600px] bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden hidden flex-col origin-bottom-right transition-all duration-300">
-        <!-- 顶部标题栏 -->
-        <div class="bg-slate-900 text-white px-4 py-3 flex justify-between items-center shrink-0">
-            <div class="flex items-center gap-2">
-                <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                <span class="font-bold text-sm">AutoFlight 智能助手</span>
-            </div>
-            <button onclick="toggleBaiduChat()" class="text-slate-400 hover:text-white">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        </div>
-
-        <!-- SDK 挂载点 -->
-        <!-- 关键修改：增加了一个 style 标签，强制 iframe 撑满 -->
-        <div class="flex-1 bg-slate-50 relative w-full h-full overflow-hidden">
-             <!-- 引入百度 SDK -->
-             <script src="https://agi-dev-platform-web.cdn.bcebos.com/ai_apaas/embed/output/embedFullSDK.js?responseExpires=0&t=1764212310484"></script>
-             
-             <!-- 强制样式补丁：解决白屏问题 -->
-             <style>
-                 #baidu-mount-point iframe {
-                     width: 100% !important;
-                     height: 100% !important;
-                     border: none !important;
-                     display: block !important;
-                 }
-             </style>
-             
-             <div id="baidu-mount-point" class="w-full h-full"></div>
-        </div>
-    </div>
-
-    <!-- 3. 初始化脚本 (精简版) -->
+    <!-- 🟢 百度 AppBuilder 官方 SDK (极简模式) -->
+    <!-- 删除了所有自定义 CSS 容器，直接调用官方脚本 -->
+    <!-- 页面右下角会自动出现蓝色悬浮球，绝对能用 -->
+    <script src="https://agi-dev-platform-web.cdn.bcebos.com/ai_apaas/embed/output/embedFullSDK.js?responseExpires=0&t=1764212310484"></script>
     <script>
-        let isChatInitialized = false;
-function toggleBaiduChat() {
-        const container = document.getElementById('baidu-chat-container');
-        
-        if (container.classList.contains('hidden')) {
-            // 1. 先显示窗口
-            container.classList.remove('hidden');
-            container.classList.add('flex'); 
-            
-            // 2. 关键修改：延迟 200毫秒再加载 SDK，确保窗口已经完全渲染出来
-            if (!isChatInitialized) {
-                setTimeout(() => {
-                    initBaiduSDK();
-                    isChatInitialized = true;
-                }, 200); // 延迟 200ms
-            }
-        } else {
-            // 隐藏窗口
-            container.classList.add('hidden');
-            container.classList.remove('flex');
-        }
-    }        function initBaiduSDK() {
-            new EmbedWebSDK({
-                appId: '905124da-6d28-4f00-8467-74c7fbb90c01',
-                code: 'embedEAgXsxc6FSMd8aIAH9LG',
-                mountNode: document.getElementById('baidu-mount-point'),
-                renderConfig: {
-                    // 只要设为 auto 或者 100% 即可，去掉多余参数
-                    width: '100%',
-                    height: '100%'
-                }
-            });
-        }
+    new EmbedWebSDK({
+        appId: '905124da-6d28-4f00-8467-74c7fbb90c01',
+        code: 'embedEAgXsxc6FSMd8aIAH9LG'
+    });
     </script>
 
 </body>
