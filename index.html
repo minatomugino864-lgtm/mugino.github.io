@@ -710,5 +710,81 @@
     });
     </script>
 
+<!-- ======================================================= -->
+    <!-- 新增：AutoFlight 在线体验区 (固定大窗口) -->
+    <!-- ======================================================= -->
+    <section class="py-16 bg-slate-100 border-t border-slate-200">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-slate-900">在线试用 AutoFlight</h2>
+                <p class="text-slate-500 mt-2">无需跳转，在此直接对话</p>
+            </div>
+
+            <!-- 这里是重点：给它一个固定高度的大容器 -->
+            <!-- h-[800px] 保证高度足够，max-w-5xl 保证宽度合适 -->
+            <div class="w-full max-w-5xl mx-auto h-[800px] bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200 relative">
+                <!-- 挂载点 -->
+                <div id="static-mount-point" class="w-full h-full"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 底部 -->
+    <footer class="bg-slate-950 text-slate-500 py-12 border-t border-slate-800">
+        <div class="container mx-auto px-6 text-center">
+            <p class="mb-2 text-slate-400">© 2025 杨嘉逸 Yang Jiayi. All rights reserved.</p>
+            <p class="text-xs">Designed with <span class="text-red-500">♥</span> and Code.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript 逻辑 (保留之前的动效) -->
+    <script>
+        // ... (如果你之前的动效脚本还在，可以保留，或者直接用下面的) ...
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal();
+        
+        function moveBlobs(event) {
+            const blobs = document.querySelectorAll('.interactive-blob');
+            const x = event.clientX;
+            const y = event.clientY;
+            blobs.forEach(blob => {
+                const speed = blob.getAttribute('data-speed');
+                blob.style.transform = `translate(${(window.innerWidth - x * speed) / 100}px, ${(window.innerHeight - y * speed) / 100}px)`;
+            });
+        }
+    </script>
+
+    <!-- 🟢 百度 SDK 核心配置 -->
+    <script src="https://agi-dev-platform-web.cdn.bcebos.com/ai_apaas/embed/output/embedFullSDK.js?responseExpires=0&t=1764212310484"></script>
+    
+    <!-- 关键样式补丁：强制填满刚才设置的 800px 高度 -->
+    <style>
+        #static-mount-point iframe {
+            width: 100% !important;
+            height: 100% !important;
+            border: none !important;
+            display: block !important;
+        }
+    </style>
+
+    <script>
+        new EmbedWebSDK({
+            appId: '905124da-6d28-4f00-8467-74c7fbb90c01',
+            code: 'embedEAgXsxc6FSMd8aIAH9LG',
+            mountNode: document.getElementById('static-mount-point') // 挂载到我们的大容器里
+        });
+    </script>
 </body>
 </html>
+
