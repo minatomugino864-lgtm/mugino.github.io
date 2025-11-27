@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>杨嘉逸 | AI Engineering & Software Student</title>
+    <meta name="description" content="杨嘉逸的个人作品集 - 华中科技大学软件工程学生，AI 工程师">
+    
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- 引入 Google Fonts -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap');
+        
+        body { font-family: 'Inter', 'Noto Sans SC', sans-serif; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        
+        /* 隐藏滚动条但保留功能 */
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* 自定义滚动条样式 (用于弹窗内容) */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* 滚动显现动画类 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 交互式背景球 */
+        .interactive-blob {
+            position: absolute;
+            border-radius: 50%;
+            mix-blend-mode: multiply;
+            filter: blur(40px);
+            opacity: 0.7;
+            transition: transform 0.2s cubic-bezier(0.2, 0, 0.2, 1);
+            will-change: transform;
+        }
+        
+        /* 手机外壳样式 */
+        .phone-frame {
+            box-shadow: 
+                0 0 0 2px #1f2937,
+                0 0 0 6px #374151,
+                0 20px 40px -10px rgba(0,0,0,0.3);
+        }
+
+        /* 节点连线 SVG 样式 */
+        .workflow-line {
+            stroke: #cbd5e1;
+            stroke-width: 2;
+            fill: none;
+            stroke-dasharray: 8;
+            animation: dash 30s linear infinite;
+        }
+        @keyframes dash {
+            to { stroke-dashoffset: -1000; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased selection:bg-blue-200 selection:text-blue-900 overflow-x-hidden">
+
+    <!-- 导航栏 -->
+    <nav class="fixed w-full z-40 top-0 transition-all duration-300 bg-white/80 backdrop-blur-md border-b border-slate-200">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl font-bold flex items-center gap-2 group">
+                <span class="bg-blue-600 text-white w-8 h-8 flex items-center justify-center rounded-lg group-hover:rotate-12 transition-transform shadow-lg shadow-blue-500/30">Y</span>
+                <span class="font-serif text-slate-800">Yang Jiayi</span>
+            </a>
+            <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-600">
+                <a href="#home" class="hover:text-blue-600 transition-colors">首页</a>
+                <a href="#about" class="hover:text-blue-600 transition-colors">关于我</a>
+                <a href="#journey" class="hover:text-blue-600 transition-colors">技术进阶</a>
+                <a href="#projects" class="hover:text-blue-600 transition-colors">AI作品</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero 区域 (鼠标交互背景) -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden" onmousemove="moveBlobs(event)">
+        <!-- 交互背景层 -->
+        <div class="absolute inset-0 z-0 pointer-events-none">
+            <div class="interactive-blob w-96 h-96 bg-purple-300 -top-20 -left-20" data-speed="2"></div>
+            <div class="interactive-blob w-80 h-80 bg-yellow-300 top-40 right-20" data-speed="-1"></div>
+            <div class="interactive-blob w-64 h-64 bg-blue-300 bottom-20 left-1/3" data-speed="1.5"></div>
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <div class="reveal inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/60 backdrop-blur-sm border border-white/50 text-blue-600 text-xs font-bold mb-8 shadow-sm">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                </span>
+                2025级 软件工程 AI大模型试验班
+            </div>
+            <h1 class="reveal text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
+                你好，我是 <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">杨嘉逸</span>
+            </h1>
+            <p class="reveal font-serif text-xl md:text-3xl text-slate-600 italic mb-8 transition-delay-100">
+                AI Algorithm Engineer & Model Optimization Researcher
+            </p>
+            <p class="reveal text-lg text-slate-500 max-w-2xl mx-auto mb-12 leading-relaxed transition-delay-200">
+                就读于华中科技大学软件学院。我致力于构建对生活方式有突破性意义的 AI 智能体，立志成为一名既懂技术深度，又具人文关怀的工程师。
+            </p>
+            <div class="reveal flex flex-col md:flex-row justify-center gap-4 transition-delay-300">
+                <a href="#projects" class="group inline-flex items-center justify-center px-8 py-3.5 text-base font-medium text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-all shadow-xl hover:shadow-blue-500/40 hover:-translate-y-1">
+                    <span>查看项目</span>
+                    <i class="fa-solid fa-arrow-down ml-2 group-hover:animate-bounce"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于我 -->
+    <section id="about" class="py-32 bg-white relative">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <h2 class="text-4xl font-bold mb-8 flex items-center gap-4">
+                        <span class="w-2 h-12 bg-blue-600 rounded-full"></span> 关于我
+                    </h2>
+                    <div class="prose prose-lg text-slate-600 font-serif leading-loose">
+                        <p class="mb-6">
+                            我不仅希望做一个理性的开发者，更想做一个温良的技术人。我的初心源于对“中国脊梁”的向往，在西昌观看火箭发射的经历，让我深刻体会到科技报国的意义。
+                        </p>
+                        <p class="text-xl font-medium text-slate-800">
+                            “<span class="bg-yellow-100 px-2">技术之上是产品，产品之上是人性，人性之上是信仰。</span>”
+                        </p>
+                    </div>
+                    
+                    <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:shadow-lg hover:border-blue-200 transition-all group">
+                            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 mb-4 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-bullseye text-xl"></i>
+                            </div>
+                            <h3 class="font-bold text-slate-900 mb-2">职业目标</h3>
+                            <p class="text-sm text-slate-600">人工智能工程技术人员<br>(大模型与智能体方向)</p>
+                        </div>
+                        <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:shadow-lg hover:border-purple-200 transition-all group">
+                            <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center text-purple-600 mb-4 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-heart text-xl"></i>
+                            </div>
+                            <h3 class="font-bold text-slate-900 mb-2">核心理念</h3>
+                            <p class="text-sm text-slate-600">技术深度 + 产品直觉 + 伦理意识</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="reveal bg-slate-900 p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden text-white transition-delay-200">
+                    <!-- 装饰背景 -->
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                    
+                    <h3 class="text-2xl font-bold mb-8 relative z-10">技术栈</h3>
+                    <div class="space-y-8 relative z-10">
+                        <div>
+                            <h4 class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-4">AI & LLM</h4>
+                            <div class="flex flex-wrap gap-3">
+                                <span class="px-4 py-2 bg-white/10 border border-white/10 rounded-lg text-sm font-medium hover:bg-white/20 transition-colors">Prompt Engineering</span>
+                                <span class="px-4 py-2 bg-white/10 border border-white/10 rounded-lg text-sm font-medium hover:bg-white/20 transition-colors">CoT (思维链)</span>
+                                <span class="px-4 py-2 bg-white/10 border border-white/10 rounded-lg text-sm font-medium hover:bg-white/20 transition-colors">Fine-tuning</span>
+                                <span class="px-4 py-2 bg-white/10 border border-white/10 rounded-lg text-sm font-medium hover:bg-white/20 transition-colors">RAG</span>
+                                <span class="px-4 py-2 bg-white/10 border border-white/10 rounded-lg text-sm font-medium hover:bg-white/20 transition-colors">Baidu AppBuilder</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-purple-400 uppercase tracking-widest mb-4">Engineering</h4>
+                            <div class="flex flex-wrap gap-3">
+                                <span class="px-4 py-2 bg-white/10 border border-white/10 rounded-lg text-sm font-medium hover:bg-white/20 transition-colors">Python</span>
+                                <span class="px-4 py-2 bg-white/10 border border-white/10 rounded-lg text-sm font-medium hover:bg-white/20 transition-colors">PyTorch</span>
+                                <span class="px-4 py-2 bg-white/10 border border-white/10 rounded-lg text-sm font-medium hover:bg-white/20 transition-colors">LangChain</span>
+                                <span class="px-4 py-2 bg-white/10 border border-white/10 rounded-lg text-sm font-medium hover:bg-white/20 transition-colors">Vue.js</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 成长路径 / 技术进阶 -->
+    <section id="journey" class="py-24 bg-slate-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl font-bold text-slate-900">技术进阶路线</h2>
+                <p class="text-slate-500 mt-2">From Foundation to AGI | 我的 AI 学习与探索之路</p>
+            </div>
+
+            <div class="max-w-4xl mx-auto reveal">
+                <div class="relative border-l-2 border-slate-200 space-y-16 pl-8 ml-4 md:ml-10">
+                    
+                    <!-- 节点 1：CS 基石 -->
+                    <div class="relative group">
+                        <span class="absolute -left-[43px] top-1 h-6 w-6 rounded-full bg-slate-200 border-4 border-white shadow-sm group-hover:bg-blue-500 group-hover:scale-125 transition-all duration-300"></span>
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="px-2 py-0.5 bg-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-wider rounded-md">Phase 01</span>
+                            <h3 class="text-xl font-bold text-slate-900">CS 基石与数学底座</h3>
+                        </div>
+                        <div class="p-6 bg-white rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-all">
+                            <div class="flex gap-2 mb-4 text-xs font-mono text-slate-400">
+                                <span>Linux</span> · <span>Python</span> · <span>Math</span>
+                            </div>
+                            <ul class="space-y-3 text-slate-600 text-sm">
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-blue-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                                    <span>熟练掌握 Linux (WSL2) 环境与 Git 版本控制协作</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-blue-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                                    <span>精通 Python 核心及数据科学栈 (NumPy/Pandas/Matplotlib)</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-blue-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                                    <span>夯实数学基础：线性代数 (Gilbert Strang)、概率论与数理统计</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 节点 2：深度学习 -->
+                    <div class="relative group">
+                        <span class="absolute -left-[43px] top-1 h-6 w-6 rounded-full bg-indigo-200 border-4 border-white shadow-sm group-hover:bg-indigo-500 group-hover:scale-125 transition-all duration-300"></span>
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="px-2 py-0.5 bg-indigo-100 text-indigo-600 text-[10px] font-bold uppercase tracking-wider rounded-md">Phase 02</span>
+                            <h3 class="text-xl font-bold text-slate-900">深度学习与框架掌控</h3>
+                        </div>
+                        <div class="p-6 bg-white rounded-2xl shadow-sm border border-indigo-50 hover:border-indigo-100 hover:shadow-md transition-all">
+                            <div class="flex gap-2 mb-4 text-xs font-mono text-indigo-300">
+                                <span>PyTorch</span> · <span>Neural Networks</span>
+                            </div>
+                            <ul class="space-y-3 text-slate-600 text-sm">
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                                    <span>深度掌握 PyTorch 动态图机制 (Prefer PyTorch over TensorFlow)</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                                    <span>研读经典架构：CNN (ResNet), RNN, Transformer (Attention is all you need)</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-indigo-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                                    <span>学习斯坦福 CS231n (CV) & CS224n (NLP) 核心课程</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 节点 3：学术前沿 -->
+                    <div class="relative group">
+                        <span class="absolute -left-[43px] top-1 h-6 w-6 rounded-full bg-purple-200 border-4 border-white shadow-sm group-hover:bg-purple-500 group-hover:scale-125 transition-all duration-300"></span>
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="px-2 py-0.5 bg-purple-100 text-purple-600 text-[10px] font-bold uppercase tracking-wider rounded-md">Phase 03</span>
+                            <h3 class="text-xl font-bold text-slate-900">学术前沿与论文复现</h3>
+                        </div>
+                        <div class="p-6 bg-white rounded-2xl shadow-sm border border-purple-50 hover:border-purple-100 hover:shadow-md transition-all">
+                            <div class="flex gap-2 mb-4 text-xs font-mono text-purple-300">
+                                <span>Arxiv</span> · <span>Paper Reproduction</span>
+                            </div>
+                            <ul class="space-y-3 text-slate-600 text-sm">
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-purple-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                                    <span>养成 Arxiv / PapersWithCode 日常阅读习惯，紧跟 SOTA</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-purple-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                                    <span>论文代码复现：从 GAN 到 Diffusion Models 的手写实现</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-purple-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                                    <span>专注于 LLM Fine-tuning (微调) 与 Chain of Thought (思维链) 研究</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 节点 4：产品落地 -->
+                    <div class="relative group">
+                        <span class="absolute -left-[43px] top-1 h-6 w-6 rounded-full bg-pink-200 border-4 border-white shadow-sm group-hover:bg-pink-500 group-hover:scale-125 transition-all duration-300"></span>
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="px-2 py-0.5 bg-pink-100 text-pink-600 text-[10px] font-bold uppercase tracking-wider rounded-md">Current</span>
+                            <h3 class="text-xl font-bold text-slate-900">智能体与产品落地</h3>
+                        </div>
+                        <div class="p-6 bg-white rounded-2xl shadow-sm border border-pink-50 hover:border-pink-100 hover:shadow-md transition-all">
+                            <div class="flex gap-2 mb-4 text-xs font-mono text-pink-300">
+                                <span>Agentic AI</span> · <span>Product Thinking</span>
+                            </div>
+                            <ul class="space-y-3 text-slate-600 text-sm">
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-pink-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                                    <span>构建 Embodied AI (具身智能) 与 Multi-Agent Systems</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-pink-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                                    <span>践行"技术之上是产品"：将算法封装为解决实际痛点的应用 (如 AutoFlight)</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <svg class="w-5 h-5 text-pink-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                                    <span>参与 Kaggle / 挑战杯，在实战中淬炼鲁棒性算法</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 项目作品 (重点区域) -->
+    <section id="projects" class="py-24 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col items-center text-center mb-20 reveal">
+                <h2 class="text-4xl font-bold mb-4">精选项目作品</h2>
+                <p class="text-slate-500 text-lg max-w-2xl">
+                    将大模型技术落地为实际可用的产品。以下是我的代表作，融合了 Agent 工作流编排与自然语言交互。
+                </p>
+            </div>
+
+            <!-- AutoFlight Card -->
+            <div class="reveal max-w-5xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-200 hover:shadow-2xl transition-all duration-500">
+                <div class="grid md:grid-cols-2">
+                    <!-- 左侧：封面图/预览 -->
+                    <div class="relative bg-gradient-to-br from-blue-600 to-indigo-700 p-10 flex items-center justify-center overflow-hidden group cursor-pointer" onclick="openProjectModal()">
+                        <!-- 装饰圆环 -->
+                        <div class="absolute w-96 h-96 border-[40px] border-white/10 rounded-full -top-20 -left-20 animate-spin-slow" style="animation-duration: 20s;"></div>
+                        <div class="relative z-10 text-center">
+                            <div class="w-20 h-20 bg-white rounded-2xl flex items-center justify-center text-blue-600 text-3xl shadow-lg mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                                <i class="fa-solid fa-plane-departure"></i>
+                            </div>
+                            <h3 class="text-3xl font-bold text-white mb-2">AutoFlight</h3>
+                            <p class="text-blue-100">智能航班助手 Agent</p>
+                            <div class="mt-8 inline-block px-6 py-2 bg-white/20 backdrop-blur-md rounded-full text-white text-sm font-semibold border border-white/30 group-hover:bg-white group-hover:text-blue-600 transition-colors">
+                                点击查看架构设计 & 搭建心得 <i class="fa-solid fa-code-branch ml-2"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 右侧：简介 -->
+                    <div class="p-10 flex flex-col justify-center">
+                        <div class="flex gap-2 mb-4">
+                            <span class="px-3 py-1 bg-blue-50 text-blue-600 text-xs font-bold rounded-md uppercase">AppBuilder</span>
+                            <span class="px-3 py-1 bg-purple-50 text-purple-600 text-xs font-bold rounded-md uppercase">Workflow</span>
+                            <span class="px-3 py-1 bg-green-50 text-green-600 text-xs font-bold rounded-md uppercase">CoT</span>
+                        </div>
+                        <h4 class="text-2xl font-bold text-slate-900 mb-4">不仅仅是问答，更是你的飞行管家。</h4>
+                        <p class="text-slate-600 mb-6 leading-relaxed">
+                            AutoFlight 是一款基于百度千帆 AppBuilder 开发的 AI 原生应用。它能理解复杂的飞行需求，识别“红眼航班”、“宽体机”等行业术语，并结合 API 熔断机制提供高可用的智能决策。
+                        </p>
+                        <ul class="space-y-3 text-slate-700 mb-8">
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-check-circle text-blue-500"></i>
+                                <span><b>思维链 (CoT)</b>：先需求挖掘，再风控分析，后给出建议。</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-check-circle text-blue-500"></i>
+                                <span><b>容错机制</b>：API 异常时自动降级，保证服务不中断。</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i class="fa-solid fa-check-circle text-blue-500"></i>
+                                <span><b>专业排版</b>：结构化输出，卡片式展示，信息一目了然。</span>
+                            </li>
+                        </ul>
+                        <div class="flex gap-4">
+                            <a href="https://appbuilder.baidu.com/s/B99bh0Gr" target="_blank" class="inline-flex items-center justify-center px-6 py-3 text-sm font-medium bg-blue-600 hover:bg-blue-700 text-white rounded-xl transition-all shadow-lg hover:shadow-blue-500/30">
+                                试用 Agent <i class="fa-solid fa-arrow-up-right-from-square ml-2"></i>
+                            </a>
+                            <button onclick="openProjectModal()" class="inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-slate-700 border border-slate-300 rounded-xl hover:bg-slate-50 transition-all">
+                                了解架构设计
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 更多项目 Grid (占位) -->
+            <div class="grid md:grid-cols-2 gap-8 mt-12">
+                <div class="reveal bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition-all group">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center text-xl group-hover:rotate-12 transition-transform">
+                            <i class="fa-solid fa-eye"></i>
+                        </div>
+                        <span class="text-xs font-bold bg-slate-100 text-slate-500 px-3 py-1 rounded-full">进行中</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">CV 图像识别系统</h3>
+                    <p class="text-slate-500 text-sm mb-4 leading-relaxed">基于深度学习的图像识别与处理探索，专注于复杂场景下的物体检测与分割。</p>
+                </div>
+                
+                <div class="reveal bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl transition-all group">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-xl group-hover:rotate-12 transition-transform">
+                            <i class="fa-solid fa-code"></i>
+                        </div>
+                        <span class="text-xs font-bold bg-slate-100 text-slate-500 px-3 py-1 rounded-full">进行中</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">全栈工程实践</h3>
+                    <p class="text-slate-500 text-sm mb-4 leading-relaxed">专注于软件架构设计与全流程开发实践，解决特定场景下的用户痛点。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 详情弹窗 (Modal) -->
+    <div id="projectModal" class="fixed inset-0 z-50 hidden opacity-0 transition-opacity duration-300" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <!-- 背景遮罩 -->
+        <div class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm transition-opacity" onclick="closeProjectModal()"></div>
+
+        <!-- 弹窗容器 -->
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                
+                <!-- 弹窗卡片 -->
+                <div class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-6xl border border-slate-200">
+                    
+                    <!-- 顶部栏 -->
+                    <div class="bg-white px-6 py-4 border-b border-slate-100 flex justify-between items-center sticky top-0 z-20">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white">
+                                <i class="fa-solid fa-plane-departure text-sm"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-slate-900">AutoFlight 深度解析</h3>
+                                <p class="text-xs text-slate-500">Agent 搭建心得 & 架构迭代</p>
+                            </div>
+                        </div>
+                        <button onclick="closeProjectModal()" class="text-slate-400 hover:text-slate-900 w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+                            <i class="fa-solid fa-xmark text-xl"></i>
+                        </button>
+                    </div>
+
+                    <!-- 内容区域 (Grid Layout) -->
+                    <div class="bg-slate-50 p-6 md:p-8 grid lg:grid-cols-12 gap-8 max-h-[85vh] overflow-y-auto custom-scrollbar">
+                        
+                        <!-- 左侧：手机聊天演示 (占 4 列) -->
+                        <div class="lg:col-span-4 flex justify-center items-start">
+                            <!-- 手机外壳 -->
+                            <div class="phone-frame relative w-[300px] h-[600px] bg-white rounded-[2.5rem] overflow-hidden border-8 border-slate-800 shadow-2xl sticky top-0">
+                                <!-- 手机顶部刘海/状态栏 -->
+                                <div class="absolute top-0 left-0 w-full h-7 bg-slate-800 z-20 flex justify-center">
+                                    <div class="w-32 h-5 bg-black rounded-b-xl"></div>
+                                </div>
+                                
+                                <!-- Header (App Style) -->
+                                <div class="bg-blue-600 text-white p-4 pt-10 flex items-center justify-between shrink-0 z-10 relative shadow-md">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                                            <i class="fa-solid fa-plane-departure text-xs"></i>
+                                        </div>
+                                        <div>
+                                            <h1 class="font-bold text-sm">AutoFlight</h1>
+                                            <div class="flex items-center gap-1 text-[10px] text-blue-100">
+                                                <span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
+                                                <span>在线 | 智能规划中</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 聊天内容 (可滚动) -->
+                                <div class="h-[calc(100%-110px)] overflow-y-auto p-3 bg-[#f0f2f5] space-y-4 scrollbar-hide">
+                                    
+                                    <div class="text-center text-gray-400 text-[10px] my-2">10:45</div>
+                                    
+                                    <!-- Message 1 -->
+                                    <div class="flex flex-row-reverse items-end gap-2">
+                                        <div class="w-8 h-8 bg-indigo-500 rounded-full flex items-center justify-center text-white shrink-0 text-xs font-bold">我</div>
+                                        <div class="bg-blue-500 text-white px-3 py-2 rounded-2xl rounded-tr-none max-w-[80%] shadow-sm text-xs">
+                                            从武汉去北京，有什么推荐？
+                                        </div>
+                                    </div>
+
+                                    <!-- Message 2 -->
+                                    <div class="flex items-end gap-2">
+                                        <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white shrink-0"><i class="fa-solid fa-robot text-xs"></i></div>
+                                        <div class="bg-white p-3 rounded-2xl rounded-tl-none max-w-[90%] shadow-sm text-xs border border-gray-100">
+                                            <p class="mb-2">✈️ 推荐高频航班：</p>
+                                            <div class="bg-slate-50 p-2 rounded border border-slate-200 mb-2">
+                                                <div class="flex justify-between items-center mb-1">
+                                                    <span class="font-bold text-blue-600">CA8201</span>
+                                                    <span class="px-1.5 py-0.5 bg-yellow-100 text-yellow-700 rounded text-[10px]">A330 宽体</span>
+                                                </div>
+                                                <div class="flex justify-between text-center">
+                                                    <div><div class="font-bold">08:15</div><div class="text-gray-400 scale-90">武汉天河</div></div>
+                                                    <div class="text-gray-300 self-center">➔</div>
+                                                    <div><div class="font-bold">10:15</div><div class="text-gray-400 scale-90">北京首都</div></div>
+                                                </div>
+                                            </div>
+                                            <div class="bg-orange-50 text-orange-700 p-2 rounded text-[10px] flex items-center gap-1">
+                                                <i class="fa-solid fa-temperature-arrow-down"></i> 北京今日降温，请带厚外套。
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Message 3 -->
+                                    <div class="flex flex-row-reverse items-end gap-2">
+                                        <div class="w-8 h-8 bg-indigo-500 rounded-full flex items-center justify-center text-white shrink-0 text-xs font-bold">我</div>
+                                        <div class="bg-blue-500 text-white px-3 py-2 rounded-2xl rounded-tr-none max-w-[80%] shadow-sm text-xs">
+                                            现在可以选座吗？帮我选个靠窗的。
+                                        </div>
+                                    </div>
+
+                                    <!-- Message 4 -->
+                                    <div class="flex items-end gap-2">
+                                        <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white shrink-0"><i class="fa-solid fa-robot text-xs"></i></div>
+                                        <div class="bg-white p-3 rounded-2xl rounded-tl-none max-w-[90%] shadow-sm text-xs border border-gray-100">
+                                            <div class="text-blue-800 font-bold mb-2 flex items-center gap-1"><i class="fa-solid fa-chair"></i> 智能选座建议 (A330)</div>
+                                            <p class="mb-2 text-gray-500">本航班采用 2-4-2 布局，为您推荐：</p>
+                                            
+                                            <div class="space-y-2">
+                                                <div class="flex items-center justify-between border p-2 rounded hover:bg-blue-50 cursor-pointer transition">
+                                                    <div class="flex items-center gap-2">
+                                                        <div class="w-6 h-6 bg-blue-100 text-blue-600 rounded flex items-center justify-center font-bold">A</div>
+                                                        <div>
+                                                            <div class="font-bold">42A 靠窗优选</div>
+                                                            <div class="text-[10px] text-gray-500">后舱 | 避开机翼</div>
+                                                        </div>
+                                                    </div>
+                                                    <i class="fa-solid fa-camera text-gray-300"></i>
+                                                </div>
+                                                <div class="flex items-center justify-between border p-2 rounded hover:bg-blue-50 cursor-pointer transition">
+                                                    <div class="flex items-center gap-2">
+                                                        <div class="w-6 h-6 bg-gray-100 text-gray-600 rounded flex items-center justify-center font-bold">C</div>
+                                                        <div>
+                                                            <div class="font-bold">31C 便捷通道</div>
+                                                            <div class="text-[10px] text-gray-500">前排 | 宽敞</div>
+                                                        </div>
+                                                    </div>
+                                                    <i class="fa-solid fa-person-walking text-gray-300"></i>
+                                                </div>
+                                            </div>
+                                            <p class="mt-2 text-[10px] text-gray-400">选座截止：今日 11:30</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Message 5 -->
+                                    <div class="flex flex-row-reverse items-end gap-2">
+                                        <div class="w-8 h-8 bg-indigo-500 rounded-full flex items-center justify-center text-white shrink-0 text-xs font-bold">我</div>
+                                        <div class="bg-blue-500 text-white px-3 py-2 rounded-2xl rounded-tr-none max-w-[80%] shadow-sm text-xs">
+                                            确认 42A。
+                                        </div>
+                                    </div>
+
+                                    <div class="flex justify-center pb-4">
+                                        <span class="bg-gray-200 text-gray-500 text-[10px] px-2 py-1 rounded-full">系统正在为您锁定座位...</span>
+                                    </div>
+
+                                </div>
+
+                                <!-- 底部输入框 -->
+                                <div class="absolute bottom-0 w-full bg-white p-3 border-t border-slate-100 flex items-center gap-2 z-20">
+                                    <div class="flex-1 bg-slate-100 h-8 rounded-full px-3 text-gray-400 flex items-center text-xs">请输入消息...</div>
+                                    <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-md"><i class="fa-solid fa-paper-plane text-xs"></i></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 右侧：后端逻辑与心得 (占 8 列) -->
+                        <div class="lg:col-span-8 space-y-8">
+                            
+                            <!-- 1. Development Evolution (The "Failed" Story) -->
+                             <div class="bg-indigo-50 p-6 rounded-2xl border border-indigo-100">
+                                <h4 class="text-lg font-bold text-indigo-900 mb-3 flex items-center gap-2">
+                                    <i class="fa-solid fa-code-branch"></i> 架构迭代：从工具流到 Code-Based
+                                </h4>
+                                <p class="text-sm text-indigo-800 leading-relaxed mb-4">
+                                    初期尝试使用平台原生的 GUI 工具流搭建，但由于平台对外部 API 接口的配置不够稳定，导致流程经常中断。
+                                </p>
+                                <div class="flex gap-4 text-xs">
+                                    <div class="flex-1 bg-white p-3 rounded-lg border border-indigo-100 opacity-60">
+                                        <div class="font-bold text-gray-500 mb-1">❌ V1.0 纯工具流</div>
+                                        <p class="text-gray-400">拖拽式连线，API 调用不稳定，调试困难。</p>
+                                    </div>
+                                    <div class="flex items-center text-indigo-400"><i class="fa-solid fa-arrow-right"></i></div>
+                                    <div class="flex-1 bg-white p-3 rounded-lg border border-indigo-200 shadow-sm">
+                                        <div class="font-bold text-indigo-600 mb-1">✅ V2.0 自然语言编排</div>
+                                        <p class="text-gray-600">利用 Prompt 编排逻辑，配合插件调用，灵活性与稳定性大幅提升。</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2. Workflow Visualization -->
+                            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+                                <h4 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                                    <i class="fa-solid fa-diagram-project text-blue-500"></i> 逻辑架构图 (Logic Flow)
+                                </h4>
+                                <div class="relative w-full h-64 bg-slate-50 rounded-xl border border-slate-200 overflow-hidden flex items-center justify-center">
+                                    <!-- 简化的 SVG 流程图 -->
+                                    <svg width="100%" height="100%" viewBox="0 0 800 300" class="absolute inset-0">
+                                        <!-- Connections -->
+                                        <path d="M 100 150 L 250 150" class="workflow-line" stroke="#94a3b8" stroke-width="2" />
+                                        <path d="M 350 150 L 500 100" class="workflow-line" stroke="#94a3b8" stroke-width="2" />
+                                        <path d="M 350 150 L 500 200" class="workflow-line" stroke="#94a3b8" stroke-width="2" />
+                                        <path d="M 600 100 L 700 150" class="workflow-line" stroke="#94a3b8" stroke-width="2" />
+                                        <path d="M 600 200 L 700 150" class="workflow-line" stroke="#94a3b8" stroke-width="2" />
+
+                                        <!-- Nodes -->
+                                        <g transform="translate(50, 125)">
+                                            <rect width="100" height="50" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+                                            <text x="50" y="30" text-anchor="middle" fill="#047857" font-size="12" font-weight="bold">User Input</text>
+                                        </g>
+
+                                        <g transform="translate(250, 125)">
+                                            <rect width="100" height="50" rx="8" fill="#fff7ed" stroke="#f97316" stroke-width="2"/>
+                                            <text x="50" y="30" text-anchor="middle" fill="#c2410c" font-size="12" font-weight="bold">Intent Recog</text>
+                                        </g>
+
+                                        <g transform="translate(500, 75)">
+                                            <rect width="100" height="50" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+                                            <text x="50" y="30" text-anchor="middle" fill="#1d4ed8" font-size="12" font-weight="bold">Flight API</text>
+                                        </g>
+
+                                        <g transform="translate(500, 175)">
+                                            <rect width="100" height="50" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+                                            <text x="50" y="30" text-anchor="middle" fill="#1d4ed8" font-size="12" font-weight="bold">Weather API</text>
+                                        </g>
+
+                                        <g transform="translate(700, 125)">
+                                            <rect width="80" height="50" rx="8" fill="#fef2f2" stroke="#ef4444" stroke-width="2"/>
+                                            <text x="40" y="30" text-anchor="middle" fill="#b91c1c" font-size="12" font-weight="bold">Reply</text>
+                                        </g>
+                                    </svg>
+                                </div>
+                                <p class="text-xs text-slate-500 mt-2 text-center">AutoFlight 意图识别与分发逻辑示意图</p>
+                            </div>
+
+                            <!-- 3. 9大搭建心得 (Grid) -->
+                            <div>
+                                <h4 class="text-lg font-bold text-slate-800 mb-4">搭建心得 & 关键技术点</h4>
+                                <div class="grid sm:grid-cols-2 gap-4">
+                                    <!-- Item -->
+                                    <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex gap-3">
+                                        <div class="mt-1 text-blue-500"><i class="fa-solid fa-database"></i></div>
+                                        <div>
+                                            <h5 class="font-bold text-sm text-slate-800">RAG 知识库</h5>
+                                            <p class="text-xs text-slate-500 mt-1">输入了四个专业文件构建知识库，有效避免模型幻觉。</p>
+                                        </div>
+                                    </div>
+                                    <!-- Item -->
+                                    <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex gap-3">
+                                        <div class="mt-1 text-purple-500"><i class="fa-solid fa-brain"></i></div>
+                                        <div>
+                                            <h5 class="font-bold text-sm text-slate-800">思维链 (CoT)</h5>
+                                            <p class="text-xs text-slate-500 mt-1">提示词策略：先进行“需求挖掘”和“风控分析”，再给出行动建议。</p>
+                                        </div>
+                                    </div>
+                                    <!-- Item -->
+                                    <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex gap-3">
+                                        <div class="mt-1 text-orange-500"><i class="fa-solid fa-language"></i></div>
+                                        <div>
+                                            <h5 class="font-bold text-sm text-slate-800">行业黑话识别</h5>
+                                            <p class="text-xs text-slate-500 mt-1">识别“红眼航班”、“宽体机”、“同城异地机场”等术语，打造专业顾问人设。</p>
+                                        </div>
+                                    </div>
+                                    <!-- Item -->
+                                    <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex gap-3">
+                                        <div class="mt-1 text-red-500"><i class="fa-solid fa-shield-halved"></i></div>
+                                        <div>
+                                            <h5 class="font-bold text-sm text-slate-800">API 熔断机制</h5>
+                                            <p class="text-xs text-slate-500 mt-1">若接口配置未生效，自动降级为“经验模式”给出通用建议，保证演示不翻车。</p>
+                                        </div>
+                                    </div>
+                                    <!-- Item -->
+                                    <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex gap-3">
+                                        <div class="mt-1 text-green-500"><i class="fa-solid fa-table-columns"></i></div>
+                                        <div>
+                                            <h5 class="font-bold text-sm text-slate-800">结构化排版</h5>
+                                            <p class="text-xs text-slate-500 mt-1">强制使用 Markdown 表格和 Emoji，提升信息可读性。</p>
+                                        </div>
+                                    </div>
+                                    <!-- Item -->
+                                    <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex gap-3">
+                                        <div class="mt-1 text-teal-500"><i class="fa-solid fa-plug"></i></div>
+                                        <div>
+                                            <h5 class="font-bold text-sm text-slate-800">多插件协同</h5>
+                                            <p class="text-xs text-slate-500 mt-1">集成了智能搜索生成、网页总结、实时航班查询、天气查询等多个工具。</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部 -->
+    <footer class="bg-slate-950 text-slate-500 py-12 border-t border-slate-800">
+        <div class="container mx-auto px-6 text-center">
+            <p class="mb-2 text-slate-400">© 2025 杨嘉逸 Yang Jiayi. All rights reserved.</p>
+            <p class="text-xs">Designed with <span class="text-red-500">♥</span> and Code.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript 逻辑 -->
+    <script>
+        // 弹窗控制逻辑
+        const modal = document.getElementById('projectModal');
+        const body = document.body;
+
+        function openProjectModal() {
+            modal.classList.remove('hidden');
+            // 强制重绘以触发 transition
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.querySelector('div[class*="transform"]').classList.remove('scale-95');
+                modal.querySelector('div[class*="transform"]').classList.add('scale-100');
+            }, 10);
+            body.classList.add('overflow-hidden');
+        }
+
+        function closeProjectModal() {
+            modal.classList.add('opacity-0');
+            modal.querySelector('div[class*="transform"]').classList.remove('scale-100');
+            modal.querySelector('div[class*="transform"]').classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                body.classList.remove('overflow-hidden');
+            }, 300);
+        }
+
+        // 滚动显现动画逻辑
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        // 初始化触发一次
+        reveal();
+
+        // 背景球跟随鼠标逻辑 (类似 Google Antigravity 的轻微视差)
+        function moveBlobs(event) {
+            const blobs = document.querySelectorAll('.interactive-blob');
+            const x = event.clientX;
+            const y = event.clientY;
+            
+            blobs.forEach(blob => {
+                const speed = blob.getAttribute('data-speed');
+                const xOffset = (window.innerWidth - x * speed) / 100;
+                const yOffset = (window.innerHeight - y * speed) / 100;
+                
+                blob.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+            });
+        }
+    </script>
+</body>
+</html>
