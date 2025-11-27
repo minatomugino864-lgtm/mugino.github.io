@@ -705,7 +705,7 @@
         <i class="fa-solid fa-robot text-xl group-hover:rotate-12 transition-transform"></i>
     </button>
 
-    <!-- 2. 聊天窗口容器 (默认隐藏, 固定宽高) -->
+  <!-- 2. 聊天窗口容器 (修复白屏版) -->
     <div id="baidu-chat-container" class="fixed bottom-24 right-6 z-[60] w-[380px] h-[600px] bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden hidden flex-col origin-bottom-right transition-all duration-300">
         <!-- 顶部标题栏 -->
         <div class="bg-slate-900 text-white px-4 py-3 flex justify-between items-center shrink-0">
@@ -719,57 +719,62 @@
         </div>
 
         <!-- SDK 挂载点 -->
-        <div class="flex-1 bg-slate-50 relative w-full h-full">
+        <!-- 关键修改：增加了一个 style 标签，强制 iframe 撑满 -->
+        <div class="flex-1 bg-slate-50 relative w-full h-full overflow-hidden">
              <!-- 引入百度 SDK -->
              <script src="https://agi-dev-platform-web.cdn.bcebos.com/ai_apaas/embed/output/embedFullSDK.js?responseExpires=0&t=1764212310484"></script>
+             
+             <!-- 强制样式补丁：解决白屏问题 -->
+             <style>
+                 #baidu-mount-point iframe {
+                     width: 100% !important;
+                     height: 100% !important;
+                     border: none !important;
+                     display: block !important;
+                 }
+             </style>
+             
              <div id="baidu-mount-point" class="w-full h-full"></div>
         </div>
     </div>
 
-    <!-- 3. 初始化脚本 -->
+    <!-- 3. 初始化脚本 (精简版) -->
     <script>
-        // 标记是否已经初始化
         let isChatInitialized = false;
 
         function toggleBaiduChat() {
             const container = document.getElementById('baidu-chat-container');
             
             if (container.classList.contains('hidden')) {
-                // 打开窗口
+                // 显示窗口
                 container.classList.remove('hidden');
-                container.classList.add('flex'); // 使用 flex 布局
+                container.classList.add('flex'); 
                 
-                // 首次打开时初始化 SDK，避免页面加载卡顿
+                // 首次打开初始化
                 if (!isChatInitialized) {
                     initBaiduSDK();
                     isChatInitialized = true;
                 }
             } else {
-                // 关闭窗口
+                // 隐藏窗口
                 container.classList.add('hidden');
                 container.classList.remove('flex');
             }
         }
 
         function initBaiduSDK() {
-            // 注意：这里 id 必须对应上面的 div id
             new EmbedWebSDK({
                 appId: '905124da-6d28-4f00-8467-74c7fbb90c01',
                 code: 'embedEAgXsxc6FSMd8aIAH9LG',
-                // 挂载到指定容器
                 mountNode: document.getElementById('baidu-mount-point'),
                 renderConfig: {
-                    // 这里设置为 100% 是相对于父容器(h-600px)的
+                    // 只要设为 auto 或者 100% 即可，去掉多余参数
                     width: '100%',
-                    height: '100%',
-                    // 强制显示模式
-                    display: 'embed' 
+                    height: '100%'
                 }
             });
         }
     </script>
-    <!-- END: 百度 AppBuilder 悬浮窗修复版 -->
-    <!-- ======================================================= -->
 
 </body>
 </html>
